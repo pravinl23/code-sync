@@ -12,7 +12,7 @@ class Solution(object):
         lists = [l for l in lists if l]
 
 
-        def mergeTwoLists(self, list1, list2):
+        def mergeTwoLists(list1, list2):
             """
             :type list1: Optional[ListNode]
             :type list2: Optional[ListNode]
@@ -38,8 +38,16 @@ class Solution(object):
             return head.next
         if not lists:
             return None   
-        merged = lists[0]
-        for i in range(len(lists)-1):
-            merged = mergeTwoLists(self, merged, lists[i+1])
+        if len(lists) == 1:
+            return lists[0]
 
-        return merged
+        def DCMerge(l):
+            if len(l) == 2:
+                return mergeTwoLists(l[0], l[1])
+            elif len(l) == 3:
+                return mergeTwoLists(l[0], mergeTwoLists(l[1], l[2]))
+            else:
+                middle = len(l) // 2 + 1
+                return mergeTwoLists(self.mergeKLists(l[:middle]), self.mergeKLists(l[middle:]))
+
+        return DCMerge(lists)
