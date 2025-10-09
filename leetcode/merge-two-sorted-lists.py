@@ -13,24 +13,18 @@ class Solution(object):
         head = ListNode(0)
         curr = head
         while list1 and list2:
-            while list1 and list2 and list1.val < list2.val:
-                print(list1)
+            if list1.val < list2.val:
                 curr.next = list1
                 list1 = list1.next
                 curr = curr.next
-                curr.next = None
-            while list1 and list2 and list2.val <= list1.val:
-                print(list2)
+            else:
                 curr.next = list2
                 list2 = list2.next
                 curr = curr.next
-                curr.next = None
 
         if list1:
             curr.next = list1
         elif list2:
             curr.next = list2
 
-        head = head.next
-
-        return head
+        return head.next
