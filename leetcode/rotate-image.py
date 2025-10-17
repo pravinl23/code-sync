@@ -8,17 +8,17 @@ class Solution(object):
         # vertically reflect
         def reflect(m):
             n = len(m)
-            for i in range(len(m) // 2):
-                temp = m[len(m) - i - 1]
-                m[len(m) - i - 1] = m[i]
+            for i in range(n // 2):
+                temp = m[n - i - 1]
+                m[n - i - 1] = m[i]
                 m[i] = temp
             
 
         reflect(matrix)
         def transpose(m):
-            for r in range(len(m)):
-                for c in range(r + 1, len(m)):
-                    print(r,c)
+            n = len(m)
+            for r in range(n):
+                for c in range(r + 1, n):
                     temp = m[r][c]
                     m[r][c] = m[c][r]
                     m[c][r] = temp
