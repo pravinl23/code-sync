@@ -4,14 +4,25 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        longest = []
-        for n in nums:
-            longest.append(1)
+        if not nums:
+            return 0
+        
+        ans = []
 
+        ans.append(nums[0])
 
-        [1,2,3,4]
-        for i in range(len(nums) - 1, -1, -1):
-            for j in range(i + 1, len(nums)):
-                if nums[i] < nums[j]:
-                    longest[i] = max(longest[i], 1 + longest[j])
-        return max(longest)
+        for i in range(1, len(nums)):
+            if nums[i] > nums[i - 1]:
+                ans.append(nums[i])
+            else:
+                high = len(ans) - 1
+                low = 0
+                while low < high:
+                    mid = (low + high) // 2
+                    if ans[mid] < nums[i]:
+                        low = mid + 1
+                    else:
+                        high = mid
+                ans[low] = nums[i]
+
+        return len(ans)
