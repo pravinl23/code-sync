@@ -12,7 +12,7 @@ class Solution(object):
         ans.append(nums[0])
 
         for i in range(1, len(nums)):
-            if nums[i] > nums[i - 1]:
+            if nums[i] > ans[-1]:
                 ans.append(nums[i])
             else:
                 high = len(ans) - 1
