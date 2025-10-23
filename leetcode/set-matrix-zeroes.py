@@ -6,26 +6,30 @@ class Solution(object):
         """
         numRows = len(matrix)
         numCols = len(matrix[0])
+        # extra marker for col
+        extC = 1
+
+        # mark first row and col
         for r in range(numRows):
-            for c in range(numCols):
+            if matrix[r][0] == 0:
+                extC = 0
+            for c in range(1, numCols):
                 if matrix[r][c] == 0:
-                    # replace row
-                    for i in range(0, numRows):
-                        if matrix[i][c] == 0:
-                            continue
-                        else:
-                            matrix[i][c] = 'a'
-                    # replace col
-                    for i in range(0, numCols):
-                        if matrix[r][i] == 0:
-                            continue
-                        else:
-                            matrix[r][i] = 'a'
+                    matrix[r][0] = 0 
+                    matrix[0][c] = 0
 
-        for r in range(numRows):
-            for c in range(numCols):
-                if matrix[r][c] == 'a':
+
+        for r in range(1, numRows):
+            for c in range(1, numCols):
+                if matrix[r][0] == 0 or matrix[0][c] == 0:
                     matrix[r][c] = 0
-
         
-        return matrix
+        # case for zeroing out first row
+        if matrix[0][0] == 0:
+            for c in range(numCols):
+                matrix[0][c] = 0
+
+        # zero out first col
+        if extC == 0:
+            for r in range(numRows):
+                matrix[r][0] = 0
