@@ -9,6 +9,10 @@ class Solution(object):
         :type head: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
+
+        # ITERATIVELY
+    
+        '''
         if not head:
             return head
 
@@ -23,3 +27,18 @@ class Solution(object):
         
 
         return prev
+        '''
+
+        # RECURSIVELY
+        if not head or not head.next:
+            return head
+
+        newHead = self.reverseList(head.next)
+        # reverse pointer
+        # e.g 1->2 becomes 1<->2
+        head.next.next = head
+        # break the old link 
+        # 1<->2 becomes 1<-2
+        head.next = None
+
+        return newHead
