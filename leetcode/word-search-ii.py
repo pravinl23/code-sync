@@ -5,19 +5,31 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[str]
         """
+
+        movesList = [(1,0), (-1,0), (0,1), (0,-1)]
         res = []
-        def dfs(r, c, t, wordSoFar):
-            #print(wordSoFar)
-            movesList = [(1,0), (-1,0), (0,1), (0,-1)]
-            if "END" in t and t["END"] is True:
-                res.append(wordSoFar)
-                t["END"] = False
+
+        def dfs(r, c, t):            
+            w = t.pop(".", None)
+            if w:
+                res.append(w)
+
+            emptied = False
+            if not t:
+                emptied = True
             for moves in movesList:
                 nr, nc = r + moves[0], c + moves[1]
-                if 0 <= nr < numRows and 0 <= nc < numCols and (nr, nc) not in seen and board[nr][nc] in t:
-                    seen.add((nr, nc))
-                    dfs(nr, nc, t[board[nr][nc]], wordSoFar + board[nr][nc])
-                    seen.remove((nr, nc))
+                if 0 <= nr < numRows and 0 <= nc < numCols and board[nr][nc] != "#" and board[nr][nc] in t:
+                    tmp = board[nr][nc]
+                    board[nr][nc] = "#"
+                    child = dfs(nr, nc, t[tmp])
+                    board[nr][nc] = tmp
+
+                    if child:
+                        t.pop(tmp, None)
+
+            return not t
+
             return
 
 
@@ -29,7 +41,7 @@ class Solution(object):
                 if c not in t:
                     t[c] = {}
                 t = t[c]
-            t["END"] = True
+            t["."] = w
             
         #print(trie)
         numRows = len(board)
@@ -38,10 +50,13 @@ class Solution(object):
         for r in range(numRows):
             for c in range(numCols):
                 if board[r][c] in trie:
-                    seen = set()
-                    seen.add((r,c))
-                    dfs(r, c, trie[board[r][c]], board[r][c])
-                    seen.remove((r,c))
+                    tmp = board[r][c]
+                    board[r][c] = "#"
+                    emptied = dfs(r, c, trie[tmp])
+                    board[r][c] = tmp
+
+                    if emptied:
+                        trie.pop(tmp, None)
         
         #print(trie)
 
