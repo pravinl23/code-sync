@@ -10,23 +10,15 @@ class Solution(object):
         :type root: Optional[TreeNode]
         :rtype: List[List[int]]
         """
-        NodeMap = {}
-        
+        res = []
         def dfs(node, counter):
             if not node:
                 return
-            if counter not in NodeMap:
-                NodeMap[counter] = []
-            NodeMap[counter].append(node.val)
-            if node.left:
-                dfs(node.left, counter + 1)
-            if node.right:
-                dfs(node.right, counter + 1)
+            if counter == len(res):
+                res.append([])
+            res[counter].append(node.val)
+            dfs(node.left, counter + 1)
+            dfs(node.right, counter + 1)
         
         dfs(root, 0)
-
-        res = []
-        for item in NodeMap:
-            res.append(NodeMap[item])
-
         return res
