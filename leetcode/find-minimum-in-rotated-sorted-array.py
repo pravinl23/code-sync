@@ -1,25 +1,19 @@
-class Solution(object):
-    def findMin(self, nums):
-        left, right = 0, len(nums) - 1
-        
-        res = nums[0]
+class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        low = 0
+        high = len(nums) - 1
 
-        while left <= right:
-            if nums[left] < nums[right]:
-                res = min(nums[left], res)
+        res = min(nums[low], nums[high])
+        while low <= high:
+            #everythign in order
+            if nums[low] <= nums[high]:
+                res = min(res, nums[low])
                 break
-            middle = (left + right) // 2
-            res = min(nums[middle], res)
-
-            # means its on the bigger half
-            # [3, 4, 5, 1, 2], since 5 > 3, its on bigger half (left side)
-            if nums[middle] >= nums[left]: 
-                # this means its on the right side (smaller half)
-                left = middle + 1
-                # [3, 4, 5, 1, 2]
-                #.       L  M  R
+            mid = (low + high) // 2
+            res = min(res, nums[mid])
+            if nums[low] <= nums[mid]:
+                low = mid + 1
             else:
-                right = middle - 1
-        
-        
+                high = mid - 1
+
         return res
