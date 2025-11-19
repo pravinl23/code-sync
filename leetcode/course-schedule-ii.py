@@ -21,20 +21,15 @@ class Solution(object):
             if course in visiting:
                 return False
             if course in visited:
-                visited.add(course)
-                return True
-            if adjacencyList[course] == []:
-                res.append(course)
-                visited.add(course)
                 return True
 
             visiting.add(course)
             for c in adjacencyList[course]:
                 if not dfs(c):
                     return False
+
             visiting.remove(course)
             visited.add(course)
-
             res.append(course)
     
             return True
