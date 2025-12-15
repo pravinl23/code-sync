@@ -8,7 +8,7 @@ class Solution:
         for n in nums:
             sumsofar += n
             need = sumsofar - k
-            count[sumsofar] += 1
             res += count[need]
+            count[sumsofar] += 1
             
         return res
