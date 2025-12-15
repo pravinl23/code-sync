@@ -1,27 +1,16 @@
-class Solution(object):
-    def groupAnagrams(self, strs):
-        """
-        :type strs: List[str]
-        :rtype: List[List[str]]
-        """
-
-        buckets = []
-        seen = {}
-        counter = 0
-        for s in strs:
-            inOrder = []
-            for char in s:
-                inOrder.append(char)
-            inOrder.sort()
-            inOrder = tuple(inOrder)
-
-            if inOrder in seen:
-                buckets[seen[inOrder]].append(s)
-            else:
-                seen[inOrder] = counter
-                buckets.append([])
-                buckets[counter].append(s)
-                counter += 1
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         
+        seen = {}
+        res = []
+        idx = 0
+        for s in strs:
+            c = "".join(sorted(s))
+            if c in seen:
+                res[seen[c]].append(s)
+            else:
+                res.append([s])
+                seen[c] = idx
+                idx += 1
 
-        return buckets
+        return res
