@@ -1,27 +1,13 @@
-class Solution(object):
-    def topKFrequent(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
-        """
-        counter = {}
-        for n in nums:
-            if n in counter:
-                counter[n] += 1
-            else:
-                counter[n] = 1
-
-        swap = [[] for i in range(len(nums) + 1)]
-        for n in counter:
-            swap[counter[n]].append(n)
-            
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        a = Counter(nums)
+        l = []
+        for num, count in a.items():
+            l.append([-count, num])
+        
         res = []
-        for i in range(len(swap) - 1, 0, -1):
-            if swap[i] != []:
-                for num in swap[i]:
-                    res.append(num)
-            if len(res) == k:
-                return res
+        heapq.heapify(l)
+        for i in range(k):
+            res.append(heapq.heappop(l)[1])
 
         return res
