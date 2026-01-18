@@ -1,8 +1,8 @@
-class Solution(object):
-    def twoSum(self, nums, target):
-        d = {}
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        seek = {}
         for i in range(len(nums)):
-            if nums[i] in d:
-                return [d[nums[i]], i]
-            seek = target - nums[i]
-            d[seek] = i
+            if nums[i] in seek:
+                return [i, seek[nums[i]]]
+            t = target - nums[i]
+            seek[t] = i
