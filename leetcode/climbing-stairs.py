@@ -4,29 +4,11 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        if n == 1:
+            return 1
+        dp = [0 for i in range(n)]
+        dp[n - 1], dp[n - 2] = 1, 2
+        for i in range(n - 3, -1, -1):
+            dp[i] = dp[i + 1] + dp[i + 2]
 
-        # O(n) space complexity - recursive
-        '''
-        dp = {}
-        def backtracking(n):
-            if n in dp:
-                return dp[n]
-            if n == 0:
-                return 1
-            if n < 0:
-                return 0
-            
-            dp[n] = backtracking(n - 2) + backtracking(n - 1)
-            return dp[n]
-
-        return backtracking(n)
-        '''
-
-        # O(1) space complexity - iterative (just fibonnaci)
-        if n <= 2:
-            return n
-        n1 = 1
-        n2 = 2
-        for _ in range(3, n + 1):
-            n1, n2 = n2, n1 + n2
-        return n2
+        return dp[0]
