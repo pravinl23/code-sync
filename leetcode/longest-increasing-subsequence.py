@@ -4,25 +4,16 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        if not nums:
-            return 0
         
-        ans = []
+        tail = []
 
-        ans.append(nums[0])
-
-        for i in range(1, len(nums)):
-            if nums[i] > ans[-1]:
-                ans.append(nums[i])
+        for n in nums:
+            if not tail:
+                tail.append(n)
             else:
-                high = len(ans) - 1
-                low = 0
-                while low < high:
-                    mid = (low + high) // 2
-                    if ans[mid] < nums[i]:
-                        low = mid + 1
-                    else:
-                        high = mid
-                ans[low] = nums[i]
-
-        return len(ans)
+                insert = bisect_left(tail, n)
+                if insert == len(tail):
+                    tail.append(n)
+                else:
+                    tail[insert] = n
+        return len(tail)
