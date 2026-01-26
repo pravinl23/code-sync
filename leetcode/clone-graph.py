@@ -12,18 +12,22 @@ class Solution(object):
         :type node: Node
         :rtype: Node
         """
-        mapping = {}
+        if not node:
+            return None
+        
+        visited = {}
 
-        def dfs(node):
-            if node in mapping:
-                return mapping[node]
-            
-            copy = Node(node.val)
-            mapping[node] = copy
-            # we go through every neighbour and it intilizes as we find connected nodes
-            # this relies on the graph being connected
-            for nei in node.neighbors:
+        def dfs(curr):
+            if curr in visited:
+                return visited[curr]
+
+            copy = Node(curr.val)
+            visited[curr] = copy
+
+            for nei in curr.neighbors:
                 copy.neighbors.append(dfs(nei))
             
             return copy
-        return dfs(node) if node else None
+
+
+        return dfs(node)
